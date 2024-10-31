@@ -1,0 +1,16 @@
+version: 2.1
+
+jobs:
+  cat-my-file:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run: 
+          name: cat my file from the checkout repo
+          command: cat src/hello.txt
+
+workflows:
+  build: 
+    jobs:
+      - cat-my-file
