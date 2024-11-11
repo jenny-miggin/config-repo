@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run: 
           name: cat my file from the checkout repo
-          command: cat src/hello.txt
+          command: cat src/hello.txt && echo << pipeline.trigger_parameters.github_app.commit_title >>
 
 workflows:
   build: 
