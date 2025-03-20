@@ -15,7 +15,7 @@ jobs:
           environment:
             PAYLOAD: << pipeline.trigger_parameters.webhook.body >> | jq -r          
           command: |
-            export WORKFLOW_NAME=$(echo "$PAYLOAD" | jq -r '.workflow.name')
+            WORKFLOW_NAME=$(echo "$PAYLOAD" | jq -r '.workflow.name')
             echo $WORKFLOW_NAME
 
 workflows:
