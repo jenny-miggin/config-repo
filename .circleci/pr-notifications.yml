@@ -13,11 +13,11 @@ jobs:
       - run: 
           name: This is an alert
           environment:
-            PAYLOAD: << pipeline.trigger_parameters.webhook.body >> | jq -r          
+            PAYLOAD: << pipeline.trigger_parameters.webhook.body >> | jq -r
+            WORKFLOW_NAME: echo "$PAYLOAD" | jq -r '.workflow.name'       
           command: |
-            export WORKFLOW_NAME=$(echo "$PAYLOAD" | jq -r '.workflow.name')
             export WORKFLOW_STATUS=$(echo "$PAYLOAD" | jq -r '.workflow.status')
-            echo "The workflow '$WORKFLOW_NAME' failed with the status '$WORKFLOW_STATUS'"
+            echo "The workflow '$WORKFLOW_NAME' completed with the status '$WORKFLOW_STATUS'"
 
 workflows:
   build: 
