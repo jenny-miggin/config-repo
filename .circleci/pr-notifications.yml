@@ -14,8 +14,9 @@ jobs:
           name: This is an alert
           environment:
             PAYLOAD: << pipeline.trigger_parameters.webhook.body >> | jq -r
-            WORKFLOW_NAME: << pipeline.trigger_parameters.webhook.body >> | jq .workflow.name
           command: |
+            echo $PAYLOAD
+            export WORKFLOW_NAME=$(echo "$PAYLOAD" | jq -r '.workflow.name')
             export WORKFLOW_STATUS=$(echo "$PAYLOAD" | jq -r '.workflow.status')
             echo "The workflow '$WORKFLOW_NAME' completed with the status '$WORKFLOW_STATUS'"
 
