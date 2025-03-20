@@ -17,7 +17,7 @@ jobs:
           command: |
             export WORKFLOW_NAME=$(echo "$PAYLOAD" | jq -r '.workflow.name')
             export WORKFLOW_STATUS=$(echo "$PAYLOAD" | jq -r '.workflow.status')
-            echo "The workflow '$WORKFLOW_NAME' failed with the status 'WORKFLOW_STATUS'"
+            echo "The workflow '$WORKFLOW_NAME' failed with the status '$WORKFLOW_STATUS'"
 
 workflows:
   build: 
