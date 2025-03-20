@@ -13,12 +13,9 @@ jobs:
       - run: 
           name: This is an alert
           command: |
-            echo << pipeline.trigger_parameters.webhook.body >>
             PAYLOAD=<< pipeline.trigger_parameters.webhook.body >>
-            FIXED_PAYLOAD=$(echo "$PAYLOAD" | sed 's/\([a-zA-Z0-9_-]*\):/"\1":/g; s/:\([^{[\],}]*\)\([,}]\)/:\"\1\"\2/g')
-            WORKFLOW_NAME=$(echo "$FIXED_PAYLOAD" | jq -r '.workflow.name')
-            STATUS=$(echo "$FIXED_PAYLOAD" | jq -r '.workflow.status')
-            echo "'$WORKFLOW_NAME' completed with the status: '$STATUS'"
+            WORKFLOW_NAME=$(echo "$PAYLOAD" | jq -r '.workflow.name')
+            echo $WORKFLOW_NAME
 
 workflows:
   build: 
