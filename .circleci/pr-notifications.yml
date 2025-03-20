@@ -10,6 +10,12 @@ jobs:
       - run: 
           name: This is an alert
           command: echo "I'm letting you know your Pipeline related to PR123 failed"
+      - run: 
+          name: This is an alert
+          command: |
+            WORKFLOW_NAME=$(echo << pipeline.trigger_parameters.webhook.body >> | jq -r .workflow.name)
+            STATUS=$(echo << pipeline.trigger_parameters.webhook.body >> | jq -r .workflow.status)
+            echo $WORKFLOW_NAME completed with the status: $STATUS
 
 workflows:
   build: 
