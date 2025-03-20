@@ -13,9 +13,9 @@ jobs:
       - run: 
           name: This is an alert
           environment:
-            PAYLOAD: << pipeline.trigger_parameters.webhook.body >> | jq -r
-            WORKFLOW_NAME: $(echo "$PAYLOAD" | jq -r '.workflow.name')            
+            PAYLOAD: << pipeline.trigger_parameters.webhook.body >> | jq -r          
           command: |
+            export WORKFLOW_NAME=$(echo "$PAYLOAD" | jq -r '.workflow.name')
             echo $WORKFLOW_NAME
 
 workflows:
