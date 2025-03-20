@@ -13,10 +13,10 @@ jobs:
       - run: 
           name: This is an alert
           environment:
-            WORKFLOW_NAME: << pipeline.trigger_parameters.webhook.body >> | jq -r .workflow.name
-            WORKFLOW_STATUS: << pipeline.trigger_parameters.webhook.body >> | jq -r .workflow.status
+            WORKFLOW_NAME: << pipeline.trigger_parameters.webhook.body >> | jq .workflow.name
+            WORKFLOW_STATUS: << pipeline.trigger_parameters.webhook.body >> | jq .workflow.status
           command: |
-           echo "'$WORKFLOW_NAME' completed with the status: '$WORKFLOW_STATUS'"
+            echo "'$WORKFLOW_NAME' completed with the status: '$WORKFLOW_STATUS'"
 
 workflows:
   build: 
