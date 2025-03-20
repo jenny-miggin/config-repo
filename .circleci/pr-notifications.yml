@@ -9,9 +9,6 @@ jobs:
       - checkout
       - run: 
           name: This is an alert
-          command: echo "I'm letting you know your Pipeline related to PR123 failed"
-      - run: 
-          name: This is an alert
           environment:
             PAYLOAD: << pipeline.trigger_parameters.webhook.body >>
           command: |
