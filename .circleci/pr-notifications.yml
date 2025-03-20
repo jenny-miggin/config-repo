@@ -1,0 +1,17 @@
+version: 2.1
+
+jobs:
+  notify-on-fail:
+    docker:
+      - image: cimg/base:stable
+    resource_class: small
+    steps:
+      - checkout
+      - run: 
+          name: This is an alert
+          command: echo "I'm letting you know your Pipeline related to PR123 failed"
+
+workflows:
+  build: 
+    jobs:
+      - notify-on-fail

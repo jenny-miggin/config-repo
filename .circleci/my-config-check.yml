@@ -1,0 +1,16 @@
+version: 2.1
+
+jobs:
+  check-my-config-files:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run: 
+          name: Hello from my PR run ci pipeline
+          command: echo "Hello from my PR run ci pipeline"
+
+workflows:
+  build: 
+    jobs:
+      - check-my-config-files

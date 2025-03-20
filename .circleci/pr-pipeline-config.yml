@@ -1,0 +1,16 @@
+version: 2.1
+
+jobs:
+  my-pr-job:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run: 
+          name: Hello from my PR run ci pipeline
+          command: echo "Hello from my PR run ci pipeline"
+
+workflows:
+  build: 
+    jobs:
+      - my-pr-job
