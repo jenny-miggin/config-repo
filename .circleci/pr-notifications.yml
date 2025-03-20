@@ -12,10 +12,11 @@ jobs:
           command: echo "I'm letting you know your Pipeline related to PR123 failed"
       - run: 
           name: This is an alert
+          environment:
+            PAYLOAD: << pipeline.trigger_parameters.webhook.body >> | jq -r
+            WORKFLOW_NAME: $(echo "$PAYLOAD" | jq -r '.workflow.name')            
           command: |
-            PAYLOAD=<< pipeline.trigger_parameters.webhook.body >> | jq -r
-            WORKFLOW_NAME=$(echo "$PAYLOAD" | jq -r '.workflow.name')
-            echo '"$WORKFLOW_NAME" finished'
+            echo $WORKFLOW_NAME
 
 workflows:
   build: 
