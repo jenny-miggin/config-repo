@@ -13,10 +13,10 @@ jobs:
       - run: 
           name: This is an alert
           command: |
-            PAYLOAD= << pipeline.trigger_parameters.webhook.body >>
+            PAYLOAD=<< pipeline.trigger_parameters.webhook.body >>
             WORKFLOW_NAME=$(echo $PAYLOAD | jq -r .workflow.name)
             STATUS=$(echo $PAYLOAD | jq -r .workflow.status)
-            echo $WORKFLOW_NAME completed with the status: $STATUS
+            echo "$WORKFLOW_NAME completed with the status: $STATUS"
 
 workflows:
   build: 
