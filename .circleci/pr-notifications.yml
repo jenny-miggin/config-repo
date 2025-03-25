@@ -31,7 +31,7 @@ jobs:
       - run: 
           name: This is an alert
           command: |
-            echo "The workflow completed. Go take a look at the latest commit sha: << pipeline.parameters.COMMIT_SHA >>"
+            echo "The workflow completed. Go take a look at the latest commit sha: << pipeline.parameters.commit_sha >>"
 
 workflows:
   trigger-notification-webhook: 
