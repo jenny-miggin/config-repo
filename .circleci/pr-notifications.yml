@@ -1,7 +1,7 @@
 version: 2.1
 
 parameters:
-  commit_sha:
+  COMMIT_SHA:
     type: string
     default: ""
 
@@ -31,7 +31,7 @@ jobs:
       - run: 
           name: This is an alert
           command: |
-            echo "The workflow completed. Go take a look at the latest commit sha: '$commit_sha'"
+            echo "The workflow completed. Go take a look at the latest commit sha: '$COMMIT_SHA'"
 
 workflows:
   trigger-notification-webhook: 
