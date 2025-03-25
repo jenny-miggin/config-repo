@@ -11,13 +11,12 @@ jobs:
           environment:
             PAYLOAD: << pipeline.trigger_parameters.webhook.body >>
           command: |
-            echo << pipeline.trigger_parameters.webhook.body >>, << pipeline.trigger_parameters.github_app.checkout_sha >>, << pipeline.trigger_parameters.github_app.user_name >>, << pipeline.trigger_parameters.github_app.repo_name >>
-            # export WORKFLOW_NAME=$(echo "$PAYLOAD" | jq -r '.workflow.name')
-            # export WORKFLOW_STATUS=$(echo "$PAYLOAD" | jq -r '.workflow.status')
-            # export LATEST_REVISION=$(echo "$PAYLOAD" | jq -r '.vcs.revision')
-            # if $WORKFLOW_STATUS == 'failed'; then
-            #   echo "The workflow '$WORKFLOW_NAME' completed with the status '$WORKFLOW_STATUS'. Go take a look at the latest commit sha: '$LATEST_REVISION'"
-            # fi
+            export WORKFLOW_NAME=$(echo "$PAYLOAD" | jq -r '.workflow.name')
+            export WORKFLOW_STATUS=$(echo "$PAYLOAD" | jq -r '.workflow.status')
+            export LATEST_REVISION=$(echo "$PAYLOAD" | jq -r '.vcs.revision')
+            if $WORKFLOW_STATUS == 'failed'; then
+              echo "The workflow '$WORKFLOW_NAME' completed with the status '$WORKFLOW_STATUS'. Go take a look at the latest commit sha: '$LATEST_REVISION'"
+            fi
 
   pipeline-notify-on-fail:
     docker:
