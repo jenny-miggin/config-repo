@@ -1,5 +1,10 @@
 version: 2.1
 
+parameters:
+  commit_sha:
+    type: string
+    default: ""
+
 jobs:
   webhook-notify-on-fail:
     docker:
@@ -25,10 +30,8 @@ jobs:
     steps:
       - run: 
           name: This is an alert
-          environment:
-            PAYLOAD: << pipeline.trigger_parameters.webhook.body >>
           command: |
-            echo "The workflow '$WORKFLOW_NAME' completed with the status '$WORKFLOW_STATUS'. Go take a look at the latest commit sha: '$LATEST_REVISION'"
+            echo "The workflow completed. Go take a look at the latest commit sha: '$commit_sha'"
 
 workflows:
   trigger-notification-webhook: 
