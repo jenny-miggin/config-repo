@@ -1,22 +1,45 @@
 version: 2.1
 
 jobs:
-  notify-on-fail:
+  webhook-notify-on-fail:
     docker:
       - image: cimg/base:stable
     resource_class: small
     steps:
-      - checkout
       - run: 
           name: This is an alert
           environment:
             PAYLOAD: << pipeline.trigger_parameters.webhook.body >>
           command: |
-            export WORKFLOW_NAME=$(echo "$PAYLOAD" | jq -r '.workflow.name')
-            export WORKFLOW_STATUS=$(echo "$PAYLOAD" | jq -r '.workflow.status')
-            echo "The workflow '$WORKFLOW_NAME' completed with the status '$WORKFLOW_STATUS'"
+            echo << pipeline.trigger_parameters.webhook.body >>, << pipeline.trigger_parameters.github_app.checkout_sha >>, << pipeline.trigger_parameters.github_app.user_name >>, << pipeline.trigger_parameters.github_app.repo_name >>
+            # export WORKFLOW_NAME=$(echo "$PAYLOAD" | jq -r '.workflow.name')
+            # export WORKFLOW_STATUS=$(echo "$PAYLOAD" | jq -r '.workflow.status')
+            # export LATEST_REVISION=$(echo "$PAYLOAD" | jq -r '.vcs.revision')
+            # if $WORKFLOW_STATUS == 'failed'; then
+            #   echo "The workflow '$WORKFLOW_NAME' completed with the status '$WORKFLOW_STATUS'. Go take a look at the latest commit sha: '$LATEST_REVISION'"
+            # fi
+
+  pipeline-notify-on-fail:
+    docker:
+      - image: cimg/base:stable
+    resource_class: small
+    steps:
+      - run: 
+          name: This is an alert
+          environment:
+            PAYLOAD: << pipeline.trigger_parameters.webhook.body >>
+          command: |
+            echo "The workflow '$WORKFLOW_NAME' completed with the status '$WORKFLOW_STATUS'. Go take a look at the latest commit sha: '$LATEST_REVISION'"
 
 workflows:
-  build: 
+  trigger-notification-webhook: 
+    when: 
+      equal: [ webhook, << pipeline.trigger_source >> ]
     jobs:
-      - notify-on-fail
+      - webhook-notify-on-fail
+
+  trigger-notification-pipeline: 
+    when: 
+      equal: [ api, << pipeline.trigger_source >> ]
+    jobs:
+      - pipeline-notify-on-fail
