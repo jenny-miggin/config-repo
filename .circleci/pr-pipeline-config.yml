@@ -13,7 +13,6 @@ jobs:
             echo pipeline.trigger_parameters.circleci.event_time is << pipeline.trigger_parameters.circleci.event_time >>
             echo pipeline.trigger_parameters.circleci.event_type is << pipeline.trigger_parameters.circleci.event_type >>
             echo pipeline.trigger_parameters.github_app.ref is << pipeline.trigger_parameters.github_app.ref >>
-            echo pipeline.trigger_parameters.github_app.checkout_sha is << pipeline.trigger_parameters.github_app.checkout_sha >>
             echo pipeline.trigger_parameters.github_app.user_id is << pipeline.trigger_parameters.github_app.user_id >>
             echo pipeline.trigger_parameters.github_app.user_name is << pipeline.trigger_parameters.github_app.user_name >>
             echo pipeline.trigger_parameters.github_app.user_username is << pipeline.trigger_parameters.github_app.user_username >>
