@@ -6,6 +6,27 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
+      - run:
+          name: get pipeline param values
+          command: |
+            echo << pipeline.trigger_parameters.circleci.trigger_type >> 
+            echo << pipeline.trigger_parameters.circleci.event_time >>
+            echo << pipeline.trigger_parameters.circleci.event_type >>
+            echo << pipeline.trigger_parameters.github_app.ref >>
+            echo << pipeline.trigger_parameters.github_app.checkout_sha >>
+            echo << pipeline.trigger_parameters.github_app.user_id >>
+            echo << pipeline.trigger_parameters.github_app.user_name >>
+            echo << pipeline.trigger_parameters.github_app.user_username >>
+            echo << pipeline.trigger_parameters.github_app.user_avatar >>
+            echo << pipeline.trigger_parameters.github_app.repo_name >>
+            echo << pipeline.trigger_parameters.github_app.repo_url >>
+            echo << pipeline.trigger_parameters.github_app.web_url >>
+            echo << pipeline.trigger_parameters.github_app.commit_sha >>
+            echo << pipeline.trigger_parameters.github_app.commit_title >>
+            echo << pipeline.trigger_parameters.github_app.commit_message >>
+            echo << pipeline.trigger_parameters.github_app.commit_timestamp >>
+            echo << pipeline.trigger_parameters.github_app.commit_author_name >>
+            echo << pipeline.trigger_parameters.github_app.branch >>
       - run: 
           name: cat my file from the checkout repo
           command: cat src/hello.txt
