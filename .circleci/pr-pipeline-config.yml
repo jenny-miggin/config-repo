@@ -21,6 +21,7 @@ jobs:
             echo pipeline.trigger_parameters.github_app.repo_url is << pipeline.trigger_parameters.github_app.repo_url >>
             echo pipeline.trigger_parameters.github_app.web_url is << pipeline.trigger_parameters.github_app.web_url >>
             echo pipeline.trigger_parameters.github_app.branch is << pipeline.trigger_parameters.github_app.branch >>
+            echo pipeline.event.github.pull_request.head.ref is << pipeline.event.github.pull_request.head.ref >>
       - run: 
           name: Hello from my PR run ci pipeline
           command: echo "Hello from my PR run ci pipeline"
