@@ -19,12 +19,11 @@ jobs:
             export WORKFLOW_NAME=$(echo "$PAYLOAD" | jq -r '.workflow.name')
             export WORKFLOW_STATUS=$(echo "$PAYLOAD" | jq -r '.workflow.status')
             export LATEST_REVISION=$(echo "$PAYLOAD" | jq -r '.pipeline.vcs.revision')
-            echo $PAYLOAD
-            echo $WORKFLOW_NAME
-            echo $WORKFLOW_STATUS
-            echo $LATEST_REVISION
+            export COMMIT_AUTHOR=$(echo "$PAYLOAD" | jq -r '.pipeline.vcs.commit.author.email')
+            export WORKFLOW_URL=$(echo "$PAYLOAD" | jq -r '.workflow.url')
+
             if [ "$WORKFLOW_STATUS" = "failed" ]; then
-                echo "The workflow '$WORKFLOW_NAME' completed with the status '$WORKFLOW_STATUS'. Go take a look at the latest commit sha: '$LATEST_REVISION'"
+                echo -e "Hi $COMMIT_AUTHOR.\nThe workflow '$WORKFLOW_NAME' completed with the status '$WORKFLOW_STATUS'.\nYou can view this workflow here: '$WORKFLOW_URL'"
             else
                 echo "workflow did not fail. No need to send a notification"
             fi
