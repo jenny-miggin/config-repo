@@ -19,6 +19,10 @@ jobs:
             export WORKFLOW_NAME=$(echo "$PAYLOAD" | jq -r '.workflow.name')
             export WORKFLOW_STATUS=$(echo "$PAYLOAD" | jq -r '.workflow.status')
             export LATEST_REVISION=$(echo "$PAYLOAD" | jq -r '.pipeline.vcs.revision')
+            echo $PAYLOAD
+            echo $WORKFLOW_NAME
+            echo $WORKFLOW_STATUS
+            echo $LATEST_REVISION
             if $WORKFLOW_STATUS == 'failed'; then
               echo "The workflow '$WORKFLOW_NAME' completed with the status '$WORKFLOW_STATUS'. Go take a look at the latest commit sha: '$LATEST_REVISION'"
               else
