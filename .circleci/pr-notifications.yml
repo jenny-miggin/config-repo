@@ -23,9 +23,9 @@ jobs:
             echo $WORKFLOW_NAME
             echo $WORKFLOW_STATUS
             echo $LATEST_REVISION
-            if $WORKFLOW_STATUS == 'failed'; then
-              echo "The workflow '$WORKFLOW_NAME' completed with the status '$WORKFLOW_STATUS'. Go take a look at the latest commit sha: '$LATEST_REVISION'"
-              else
+            if [ "$WORKFLOW_STATUS" = "failed" ]; then
+                echo "The workflow '$WORKFLOW_NAME' completed with the status '$WORKFLOW_STATUS'. Go take a look at the latest commit sha: '$LATEST_REVISION'"
+            else
                 echo "workflow did not fail. No need to send a notification"
             fi
 
