@@ -25,13 +25,13 @@ jobs:
             if [ "$WORKFLOW_STATUS" = "failed" ]; then
                 echo -e "Hi $COMMIT_AUTHOR.\nThe workflow '$WORKFLOW_NAME' completed with the status '$WORKFLOW_STATUS'.\nYou can view this workflow here: '$WORKFLOW_URL'"
                 # failing in order to trigger the Slack notification
-                exit 1
+                # exit 1
             else
                 echo "workflow did not fail. No need to send a notification"
             fi
-      - slack/notify:
-          channel: ABC123
-          template: basic_fail_1
+      # - slack/notify:
+      #     channel: ABC123
+      #     template: basic_fail_1
 
   pipeline-notify-on-fail:
     docker:
