@@ -6,27 +6,39 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
-      - run:
-          name: get pipeline param values
+      - run: 
+          name: This is the payload
+          environment:
+            PAYLOAD: << pipeline.trigger_parameters.webhook.body >>
           command: |
-            echo pipeline.trigger_parameters.circleci.trigger_type is << pipeline.trigger_parameters.circleci.trigger_type >> 
-            echo pipeline.trigger_parameters.circleci.event_time is << pipeline.trigger_parameters.circleci.event_time >>
-            echo pipeline.trigger_parameters.circleci.event_type is << pipeline.trigger_parameters.circleci.event_type >>
-            echo pipeline.trigger_parameters.github_app.ref is << pipeline.trigger_parameters.github_app.ref >>
-            echo pipeline.trigger_parameters.github_app.checkout_sha is << pipeline.trigger_parameters.github_app.checkout_sha >>
-            echo pipeline.trigger_parameters.github_app.user_id is << pipeline.trigger_parameters.github_app.user_id >>
-            echo pipeline.trigger_parameters.github_app.user_name is << pipeline.trigger_parameters.github_app.user_name >>
-            echo pipeline.trigger_parameters.github_app.user_username is << pipeline.trigger_parameters.github_app.user_username >>
-            echo pipeline.trigger_parameters.github_app.user_avatar is << pipeline.trigger_parameters.github_app.user_avatar >>
-            echo pipeline.trigger_parameters.github_app.repo_name is << pipeline.trigger_parameters.github_app.repo_name >>
-            echo pipeline.trigger_parameters.github_app.repo_url is << pipeline.trigger_parameters.github_app.repo_url >>
-            echo pipeline.trigger_parameters.github_app.web_url is << pipeline.trigger_parameters.github_app.web_url >>
-            echo pipeline.trigger_parameters.github_app.commit_sha is << pipeline.trigger_parameters.github_app.commit_sha >>
-            echo pipeline.trigger_parameters.github_app.commit_title is << pipeline.trigger_parameters.github_app.commit_title >>
-            echo pipeline.trigger_parameters.github_app.commit_message is << pipeline.trigger_parameters.github_app.commit_message >>
-            echo pipeline.trigger_parameters.github_app.commit_timestamp is << pipeline.trigger_parameters.github_app.commit_timestamp >>
-            echo pipeline.trigger_parameters.github_app.commit_author_name is << pipeline.trigger_parameters.github_app.commit_author_name >>
-            echo pipeline.trigger_parameters.github_app.branch is << pipeline.trigger_parameters.github_app.branch >>
+            export WORKFLOW_NAME=$(echo "$PAYLOAD" | jq -r '.workflow.name')
+            export WORKFLOW_STATUS=$(echo "$PAYLOAD" | jq -r '.workflow.status')
+            export LATEST_REVISION=$(echo "$PAYLOAD" | jq -r '.pipeline.vcs.revision')
+            export COMMIT_AUTHOR=$(echo "$PAYLOAD" | jq -r '.pipeline.vcs.commit.author.email')
+            export WORKFLOW_URL=$(echo "$PAYLOAD" | jq -r '.workflow.url')
+
+            echo "The payload is:" $PAYLOAD
+      # - run:
+      #     name: get pipeline param values
+      #     command: |
+      #       echo pipeline.trigger_parameters.circleci.trigger_type is << pipeline.trigger_parameters.circleci.trigger_type >> 
+      #       echo pipeline.trigger_parameters.circleci.event_time is << pipeline.trigger_parameters.circleci.event_time >>
+      #       echo pipeline.trigger_parameters.circleci.event_type is << pipeline.trigger_parameters.circleci.event_type >>
+      #       echo pipeline.trigger_parameters.github_app.ref is << pipeline.trigger_parameters.github_app.ref >>
+      #       echo pipeline.trigger_parameters.github_app.checkout_sha is << pipeline.trigger_parameters.github_app.checkout_sha >>
+      #       echo pipeline.trigger_parameters.github_app.user_id is << pipeline.trigger_parameters.github_app.user_id >>
+      #       echo pipeline.trigger_parameters.github_app.user_name is << pipeline.trigger_parameters.github_app.user_name >>
+      #       echo pipeline.trigger_parameters.github_app.user_username is << pipeline.trigger_parameters.github_app.user_username >>
+      #       echo pipeline.trigger_parameters.github_app.user_avatar is << pipeline.trigger_parameters.github_app.user_avatar >>
+      #       echo pipeline.trigger_parameters.github_app.repo_name is << pipeline.trigger_parameters.github_app.repo_name >>
+      #       echo pipeline.trigger_parameters.github_app.repo_url is << pipeline.trigger_parameters.github_app.repo_url >>
+      #       echo pipeline.trigger_parameters.github_app.web_url is << pipeline.trigger_parameters.github_app.web_url >>
+      #       echo pipeline.trigger_parameters.github_app.commit_sha is << pipeline.trigger_parameters.github_app.commit_sha >>
+      #       echo pipeline.trigger_parameters.github_app.commit_title is << pipeline.trigger_parameters.github_app.commit_title >>
+      #       echo pipeline.trigger_parameters.github_app.commit_message is << pipeline.trigger_parameters.github_app.commit_message >>
+      #       echo pipeline.trigger_parameters.github_app.commit_timestamp is << pipeline.trigger_parameters.github_app.commit_timestamp >>
+      #       echo pipeline.trigger_parameters.github_app.commit_author_name is << pipeline.trigger_parameters.github_app.commit_author_name >>
+      #       echo pipeline.trigger_parameters.github_app.branch is << pipeline.trigger_parameters.github_app.branch >>
       - run: 
           name: cat my file from the checkout repo
           command: cat src/hello.txt
